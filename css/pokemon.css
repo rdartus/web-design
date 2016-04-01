@@ -36,6 +36,16 @@
 			background-color:darkblue;
 			border-radius:15px
 	}
+	.img-container{
+		background-color:#888888;
+		 border-color:#FFFFFF;
+		  border-width:7px; 
+		  border-style:solid; 
+		  border-radius:50%	
+	}
+	.img-container ~ h4 {
+		text-align:center;
+	}
 	.characteristique{
 		background-color:#FFFFFF;
 	}
@@ -43,7 +53,9 @@
 		background-color:#97C2D7;
 		height:30em;
 	}
-	
+	.thumbnails-container{
+			background-color:#EEE;
+	}
 	.addendum h1,
 	.Addendum p{
 			

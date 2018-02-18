@@ -1,126 +1,564 @@
-.canvas-container{
-	height:30em;	
+/*-------- STYLE PAGE ACCUEIL --------*/
+.welcome-page{
+	/*Style*/
+	background-color: #CC463A;
+	/*Image*/
+	background-image: url("../img/Pokedex.PNG");
+	background-attachment: fixed;
+	background-position: bottom right;
+	background-repeat : no-repeat;
+	background-size: auto 500px;
 }
-.canvas-container canvas {
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        -ms-user-select: none;
-    }
-	div img{
-	width:100%
+
+.main-title{
+	/*Position*/
+	text-align: center;
+	margin-top: 12vh;
+
+	/*Style*/
+	font-family: Roboto;
 }
-	#main{
-		padding-top:80px
-	}
-	#main>div{
-		background-color:#C2C2C2;
-	}
-	#main>div>h1 {
-		color:lightgreen;
-		 text-align:center
-	}
-	.description-pokemon {
-		background-color:#0BC331;
-		border-radius:15px
-	}
-	.type{
-		border-radius:5px;	
-	}
-	.plante{
-		background-color:#0BC331;
-	}
-	.poison{
-		background-color:purple;
-	}
-	.information{
-			background-color:darkblue;
-			border-radius:15px
-	}
-	.img-container{
-		background-color:#888888;
-		 border-color:#FFFFFF;
-		  border-width:7px; 
-		  border-style:solid; 
-		  border-radius:50%	
-	}
-	.img-container ~ h4 {
-		text-align:center;
-	}
-	.characteristique{
-		background-color:#FFFFFF;
-	}
-	.addendum{
-		background-color:#97C2D7;
-		height:30em;
-	}
-	.thumbnails-container{
-			background-color:#EEE;
-	}
-	.addendum h1,
-	.Addendum p{
-			
-	}
-	.addendum footer{
-		color:#000000;	
-	}
-.slideanim {visibility:hidden;}
-  .slide {
-      animation-name: slide;
-      -webkit-animation-name: slide;	
-      animation-duration: 1s;	
-      -webkit-animation-duration: 1s;
-      visibility: visible;			
-  }
-  @keyframes slide {
-    0% {
-      opacity: 0;
-      -webkit-transform: translateY(70%);
-    } 
-    100% {
-      opacity: 1;
-      -webkit-transform: translateY(0%);
-    }	
-  }
-  @-webkit-keyframes slide {
-    0% {
-      opacity: 0;
-      -webkit-transform: translateY(70%);
-    } 
-    100% {
-      opacity: 1;
-      -webkit-transform: translateY(0%);
-    }
-  }
-  @media screen and (max-width: 768px) {
-    .col-sm-4 {
-      text-align: center;
-      margin: 25px 0;
-    }
-    .btn-lg {
-        width: 100%;
-        margin-bottom: 35px;
-    }
-  }
-  @media screen and (max-width: 480px) {
-    .logo {
-        font-size: 150px;
-    }
-  }
-    
-  .flex-container {
-    height: 100%;
-    padding: 5px;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+.main-title h1{
+	font-size: 10vw;
+	color: #4d4e49;
 }
+
+.main-title a{
+	font-size: 5vw;
+	color: #FFFFFF;
+
+}
+
+.main-title a:hover{
+	text-decoration: underline;
+	color: #FFFFFF;
+}
+
+.display-audio{
+	display: none;
+}
+
+
+/*---------------STYLE NAVBAR---------------*/
+.form-group .form-control{
+width:30vw;
+}
+
+
+/*------- STYLE COMMUN DES PARTIALS --------*/
+.cadre{
+	background-color:#C2C2C2;
+}
+
+.main{
+	padding-top:80px;
+	padding-bottom:20px;
+}
+
+.flex-container {
+height: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
 .flex-item {
-	color:#ffffff; 
-	border-radius:5px;
-	text-align:center;
-    padding-right: 5px; 
-	padding-left: 5px;
-	width: 50%;
-	margin: 5px;
+border-radius:0.4px;
+text-align:center;
+width: 50%;
 }
+
+.img-circle-container{
+background-color:#888888;
+border-color:#FFFFFF;
+border-width:0.4vw;
+border-style:solid;
+border-radius:50%;
+width:100%;
+}
+
+a:hover {
+text-decoration: none;
+cursor: pointer;
+}
+
+h1 {
+	font-size: 5em;
+	font-family: Roboto;
+	color:#CD5C5C;
+	text-align:center;
+}
+
+h2{
+	text-transform: uppercase;
+	font-size: 3em;
+	text-indent: 5px;
+	font-family: Roboto;
+}
+
+h4 {
+text-align:center;
+font-family: Roboto;
+}
+
+@media only screen and (max-width: 768px) {
+	h1 { font-size: 6.5vw; }
+	h2 { font-size: 2em; }
+
+}
+
+@media (min-width: 769px) and (max-width: 992px) {
+	h1 { font-size: 4em; }
+	h2 { font-size: 2.5em; }
+
+}
+
+
+/*-------- STYLE PARTIAL LISTE --------*/
+/*Style du span Trier par*/
+.tri{
+font-size: 1.5em;
+margin-right: 1em;
+}
+/*Accès rapide aux Pokemon précédents et suivants*/
+.pager li > a{
+	border-radius: 50%;
+	padding-bottom: 0px;
+	padding-top: 0px;
+	padding-left: 18px;
+	padding-right: 18px;
+	background: #e3e3e3;
+	border:none;
+}
+
+.pager a{
+	color: #cd5c5c;
+	font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 3em;
+	line-height: normal;
+}
+
+.pager .title-container{
+	display: inline-block;
+}
+/*Style des éléments de tri dans la liste*/
+.recherche-avance{
+	background-color: #8B8B8B;
+}
+
+.param-recherche{
+margin-bottom: 2em;
+color: #bcbcbc;
+display: block;
+}
+
+.param-button {
+margin-top: 0.5em;
+margin-bottom: 0.5em;
+}
+
+.btn-close{
+margin-top: 2em;
+margin-right: 3em;
+cursor: pointer;
+float: right;
+}
+
+
+/*------- STYLE PARTIAL FICHE --------*/
+/*Image principale et titre de la fiche individuelle*/
+.main-img {
+margin:auto;
+}
+
+.title-container h1{
+	margin-top:0px;
+}
+/*Style du bloc Description de la fiche individuelle*/
+.description-pokemon p{
+font-size: 1.4em;
+font-family: Roboto;
+color: #FFFFFF;
+}
+
+.informations-pokemon{
+background-color: #cd5c5c;
+border-radius: 10px;
+padding: 7px;
+font-family: Roboto;
+font-size: 1.4em;
+max-height: 3.5em;
+width: 95%;
+margin: auto;
+margin-bottom: 1em;
+
+}
+
+.enonce{
+color: #FFFFFF;
+margin: 1vw;
+}
+
+.donnee{
+	color: #000000;
+	margin: 1vw;
+}
+
+.separator-taille-poids {
+margin-right: 25%;
+}
+/*Style du bloc Carte de la fiche individuelle*/
+.legende{
+text-align:center;
+font-family:Roboto;
+font-size:1.3em;
+color:#FFFFFF;
+margin-top: 0.5vw;
+margin-bottom: 0.5vw;
+}
+
+.map{
+margin:auto;
+z-index:0;
+position:absolute;
+margin-left:auto;
+margin-right:auto;
+left:0;
+right:0;
+height:40vw;
+}
+
+.map-container{
+height:40vw;
+}
+
+.zone{
+margin:auto;
+z-index:1;
+animation: blink 1s;
+animation-iteration-count: infinite;
+position:absolute;
+margin-left:auto;
+margin-right:auto;
+left:0;
+right:0;
+height:40vw;
+}
+
+@keyframes blink {
+0% {
+opacity: 1;
+}
+49% {
+opacity: 1;
+}
+50% {
+opacity: 0;
+}
+100% {
+opacity: 0;
+}
+}
+/*Style du bloc Evolution de la fiche individuelle*/
+.evol-container{
+background-color:#EEE;
+}
+
+.poke-selected{
+border-color: #CD5C5C;
+border-width: 0.5vw;
+}
+/*Style du bloc Commentaires de la fiche individuelle*/
+.avis{
+background-color:#D0A6A6;
+height:30em;
+font-family: Roboto;
+}
+
+.avis blockquote,
+.comment blockquote{
+font-size: 1em;
+}
+
+.avis p,
+.comment p{
+font-size: 1.4em;
+color: #FFFFFF;
+}
+
+.avis blockquote footer,
+.comment blockquote footer{
+color:#000000;
+font-size: 1.2em;
+}
+
+.commentZone {
+background-color: #C2C2C2;
+}
+
+button {
+opacity:1;
+transition: opacity 1s;
+}
+
+button .fade{
+opacity:0;
+}
+
+#hideBtn{
+margin-left:auto;
+margin-right: auto;
+margin-top: 3em;
+margin-bottom: 3em;
+display: block;
+
+background-color: #cd5c5c;
+color: #FFFFFF;
+border-radius: 10px;
+padding: 7px;
+font-family: Roboto;
+font-size: 1.4em;
+max-height: 3.5em;
+width: 95%;
+}
+
+/*Les trois prochains styles
+
+Ces styles représentent les états du formulaire a remplir pour creer un commentaire
+*/
+textarea:focus.ng-pristine,
+textarea.form-control:focus.ng-pristine{
+	-webkit-box-shadow: inset 0 -2px 0 #2196f3;
+}
+
+input[type=email]:focus.ng-dirty.ng-invalid,
+textarea:focus.ng-dirty.ng-invalid,
+textarea.form-control:focus.ng-dirty.ng-invalid{
+	-webkit-box-shadow: inset 0 -2px 0 red;
+}
+
+input[type=email].ng-dirty.ng-valid,textarea.ng-dirty.ng-valid,textarea.form-control.ng-dirty.ng-valid{
+	-webkit-box-shadow: inset 0 -2px 0 green;
+}
+
+.saisie-mail{
+	margin-bottom: 2em;
+	width:50%;
+}
+
+.saisie-comment{
+	background: #ffffff;
+	margin-bottom: 2em;
+}
+
+.saisie-valider{
+	width: 150px;
+	display: block;
+	margin: auto;
+	margin-bottom: 5em;
+	border-radius: 5px;
+}
+
+/*Style du bloc Statistiques de la fiche individuelle*/
+.kiviat{
+height:30em;
+background-color:#FFFFFF;
+}
+
+
+/*-------- STYLE PARTIAL ABOUT --------*/
+.about-stripe{
+	margin-top: 2em;
+	margin-bottom: 3em;
+}
+
+.about-projet {
+	padding-left: 5em;
+	padding-right: 5em;
+}
+
+.presentation-equipe{
+	text-align: justify;
+}
+
+.parall{
+margin: 0 auto;
+min-width: 980px;
+overflow: auto;
+}
+
+.champions{
+	background:url(../img/team2.jpg) 50% 0 no-repeat fixed;
+	background-size: auto;
+	color: white;
+	height: 800px;
+	margin: 0 auto;
+	padding: 0;
+
+}
+
+.carte{
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: 20px;
+}
+
+
+/*---------------TYPE---------------*/
+/*style du conteneur*/
+.type{
+border-radius:5px;
+color:#FFFFFF;
+padding-right: 5px;
+padding-left: 5px;
+margin: 8px;
+}
+
+/*couleur du conteneur en fonction type*/
+.acier{
+background-color:#8B8B8B;
+}
+
+.combat{
+background-color:#B02B2B;
+}
+
+.dragon{
+background-color:#008080;
+}
+
+.eau{
+background-color:#3B8DDD  ;
+}
+
+.electrick{
+background-color:#F8C02F;
+}
+
+.feu{
+background-color:#F2684A;
+}
+
+.glace{
+background-color:#BDFCFF;
+color:#000000;
+}
+
+.insecte{
+background-color:#9EB042;
+}
+
+.normal{
+background-color: #fffccf;
+color:#000000;
+}
+
+.plante{
+background-color:#02720F;
+}
+
+.poison{
+background-color:#B97FC9;
+}
+
+.psy{
+background-color:#FB87FF;
+}
+
+.roche{
+background-color: #cf955e;
+}
+
+.sol {
+background-color: #edd089;
+}
+
+.spectre{
+background-color:#79517A;
+}
+
+.vol{
+background-color:#9AAFC9;
+}
+
+
+/*-------- ANIMATIONS --------*/
+.slideanim {
+visibility:hidden;
+}
+
+.slide {
+animation-name: slide;
+-webkit-animation-name: slide;
+animation-duration: 1s;
+-webkit-animation-duration: 1s;
+visibility: visible;
+}
+
+@keyframes slide {
+0% {
+opacity: 0;
+-webkit-transform: translateY(70%);
+}
+
+100% {
+opacity: 1;
+-webkit-transform: translateY(0%);
+}
+}
+
+@-webkit-keyframes slide {
+0% {
+opacity: 0;
+-webkit-transform: translateY(70%);
+}
+
+100% {
+opacity: 1;
+-webkit-transform: translateY(0%);
+}
+}
+
+input#un-mute {
+display: none;
+}
+
+
+.person {
+	border: 2px solid #f2f2f2;
+	padding: 80px 30px 30px 30px;
+	background-color: #d1d1d1;
+	float: left;
+	width: 100%;
+	position: relative;
+}
+@media screen and (max-width: 992px) {
+	.person {
+		margin-bottom: 3.5em;
+	}
+}
+.person figure {
+	margin-top: -60px;
+	top: 50%;
+	margin-bottom: 50px;
+	width:100%;
+}
+.person h3 {
+	margin-bottom: 0px;
+}
+.person-position {
+	color: #b3b3b3;
+	display: block;
+	margin-bottom: 20px;
+}
+
+.disabled{
+	pointer-events: none;
+	cursor: default;
+}
+
+.separator {
+	height: 2vw;
+}
+

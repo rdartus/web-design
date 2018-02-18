@@ -1,0 +1,64 @@
+
+<div class="navbar navbar-inverse navbar-fixed-top" >
+    <!--Navbar interne à chaque view car dépendant de la page-->
+    <div class="container-fluid" ng-controller="randomController as rdmCtrl">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+            <a class="navbar-brand" ng-href="#/liste">Pokédex</a>
+        </div>
+        <div class="navbar-collapse collapse navbar-responsive-collapse">
+            <ul class="nav navbar-nav" ng-init="getRandom(151)">
+                <li><a  ng-click="goto('/fiche/'+rdmCtrl.rand)">Aléatoire</a></li>
+                <li><a  ng-click="goto('/combat/')">Comparateur</a></li>
+                <li><a  ng-click="goto('/about/')">A propos</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a du-scrollspy du-smooth-scroll ="Projet">Projet</a></li>
+                <li><a du-scrollspy du-smooth-scroll ="Equipe">Equipe</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id = "Pokemon" class="container-fluid main" ng-controller="aboutController as abtCtrl" >
+    <div class="container cadre" >
+        <div class="row">
+            <h1>À propos</h1>
+        </div>
+        <!--Ligne des Experiences-->
+        <div class="row about-stripe" id="Projet">
+            <div class="col-sm-6 about-projet">
+                <h2>Projet</h2>
+                <p class="presentation-equipe">Le site web présenté reprend les consignes données pour le cours de Web-Design, à savoir une implémentation de fonctionnalités Angularjs au travers d'un site design.<br><br>
+                    N'hésitez à explorer chaque recoin du site pour découvrir les nombreuses fonctionnalités, allant du comparateur aux filtres avancés, en passant par la navigation entre les Pokémons.<br><br>
+                    Le site correspond à un Pokédex géant, regroupant pour le moment tous les Pokémons de la 1ère génération. Des avis seront ajoutés au fur et à mesure afin de faire évoluer le site. Le site reprend les critères responsive comme demandés, en sachant que l'outil permettant de tester l'aspect responsive sur Chrome ne marche pas correctement. Néanmoins, cela fonctionne parfaitement sur Firefox.
+                </p>
+            </div>
+
+            <div class="col-sm-6 about-projet">
+                <h2>Organisation</h2>
+                <p class="presentation-equipe">
+                    L'équipe s'est réunie de nombreuses fois pour avancer de façon commune. De plus, un outil collaboratif de type git a été mis en place pour faciliter le travail. Chaque membre a apporté son expertise sur le domaine, que ce soit en CSS, Angular ou HTML.
+                </p>
+            </div>
+        </div>
+        <!--Differentes images des Developpeurs et parralax image-->
+        <div class="row about-stripe" id="Equipe">
+		<div class="container-fluid champions ">
+                <div class="parall">
+                </div>
+            </div>
+            <h2>équipe</h2>
+            <div class="col-md-4 slideanim " >
+                <img src="img/card-richard.jpg" class="img-responsive img-rounded carte">
+            </div>
+            <div class="col-md-4 slideanim">
+                <img src="img/card-emmanuelle.jpg" class="img-responsive img-rounded carte">
+            </div>
+            <div class="col-md-4 slideanim">
+                <img src="img/card-elliot.jpg" class="img-responsive img-rounded carte">
+            </div>
+
+        </div>
+    </div>
+</div>

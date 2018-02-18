@@ -1,0 +1,40 @@
+<div class="navbar navbar-inverse navbar-fixed-top" >
+    <!--Navbar interne a chaque view car dépendant de la page-->
+    <div class="container-fluid" ng-controller="randomController as rdmCtrl">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+            <a class="navbar-brand" ng-href="#/liste">Pokédex</a>
+        </div>
+        <div class="navbar-collapse collapse navbar-responsive-collapse">
+            <ul class="nav navbar-nav" ng-init="getRandom(151)">
+                <li><a  ng-href="#/fiche/{{rdmCtrl.rand}}">Aléatoire</a></li>
+                <li><a  ng-href="#/combat">Comparateur</a></li>
+                <li><a  ng-href="#/about">A propos</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--Affichage d'un message d'erreur lorsque l'utilisateur veut atteindre des pages qu'il ne devrait pas
+    Il s'agit d'une sécurité-->
+<div id = "Pokemon" class="container-fluid main" ng-controller="randomController as rdmCtrl" >
+    <div class="container cadre" >
+        <div class="row">
+            <h2>ERROR 404</h2>
+            <p>Nous sommes sincèrement désolés, la page que vous avez demandé n'existe pas... <br>
+                Ainsi pour vous montrer toute l'attention que nous vous accordons, la direction et moi même vous proposons
+                la video suivante :
+            </p>
+        </div>
+        <div class="row">
+        <div class="col-sm-8 col-sm-offset-2 ">
+            <!--Affichage aléatoire d'un gif-->
+            <img ng-src="img/error/Error404_{{rdmCtrl.rand}}.gif" ng-init="getRandom(9)" class="img-responsive" alt="Responsive image">
+        </div>
+        </div>
+        <div class="row">
+            <p >
+                Cordialement. Larbins de Pr.Kultouh
+            </p>
+        </div>
+    </div>
+</div>

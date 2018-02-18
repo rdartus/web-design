@@ -1,0 +1,89 @@
+<div ng-controller="mainController as main">
+    <!--Navbar interne a chaque view car dépendant de la page-->
+    <div class="navbar navbar-inverse navbar-fixed-top" >
+        <div class="container-fluid" ng-controller="randomController as rdmCtrl">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+                <a class="navbar-brand" ng-href="#/liste">Pokédex</a>
+            </div>
+            <div class="navbar-collapse collapse navbar-responsive-collapse">
+                <ul class="nav navbar-nav" ng-init="getRandom(151)">
+                    <li><a  ng-href="#/fiche/{{rdmCtrl.rand}}">Aléatoire</a></li>
+                    <li><a  ng-href="#/combat">Comparateur</a></li>
+					<li><a  ng-href="#/about">A propos</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid main" >
+    <div class="container cadre" ng-controller="battleController as battleCtrl">
+        <h1>Comparateur de Pokemon</h1>
+        <p>Selctionnez le pokemon a comparer dans chacunes des boite de dialog</p>
+        <!--Le code suivant est répété pour la colonne suivante-->
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-1">
+                <!--Affiche le nom et l'id du pokemon selectioné-->
+                <h2 ng-if="battleCtrl.pokemon1.changed">{{battleCtrl.pokemon1.nom}} #{{battleCtrl.pokemon1.id}}</h2>
+                <form>
+                    <!--Utilisation d'un ng-model-->
+                    <select ng-model="selectedItem1"
+                            ng-change="selectedItemChanged()"
+                            class="form-control" id="pokemon1">
+                        <!--Utilisation de ng-change pour récupérer l'évènement du changement d'état et effectuer les vérifications-->
+                        <option ng-repeat="poke in main.pokedex" value="{{poke.id}}">{{poke.nom}} #{{poke.id}}</option>
+                        <!--Utilisation du ng-repeat pour afficher tous les pokemon dans le select-->
+                    </select>
+                </form>
+                <!--Affichage de la fiche comme dans la liste ou la fiche-->
+                <div ng-show="battleCtrl.pokemon1.changed">
+                    <a ng-href="#/fiche/{{battleCtrl.pokemon1.id}}">
+                        <div class="img-circle-container slide">
+                            <img ng-src="img/{{battleCtrl.pokemon1.id}}.png" class="img-responsive" alt="Responsive image">
+                        </div>
+                        <div class="flex-container">
+                            <div class="flex-item type"
+                                 ng-class="battleCtrl.pokemon1.type1|lowercase">{{battleCtrl.pokemon1.type1}}
+                            </div>
+                            <div class="flex-item type"
+                                 ng-class="battleCtrl.pokemon1.type2|lowercase"
+                                 ng-if="battleCtrl.pokemon1.type2 != ''">{{battleCtrl.pokemon1.type2}}
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-sm-2">
+                <h1>VS</h1>
+            </div>
+            <!--Répétition du code pour un autre select de pokemon-->
+            <div class="col-sm-4">
+                <h2 ng-if="battleCtrl.pokemon2.changed">{{battleCtrl.pokemon2.nom}} #{{battleCtrl.pokemon2.id}}</h2>
+                <form>
+                    <select ng-model="selectedItem2"
+                            ng-change="selectedItemChanged()"
+                            class="form-control" id="pokemon2" >
+                        <option ng-repeat="poke in main.pokedex" value="{{poke.id}}">{{poke.nom}} #{{poke.id}}</option>
+                    </select>
+                </form>
+                <div ng-show="battleCtrl.pokemon2.changed">
+                    <a ng-href="#/fiche/{{battleCtrl.pokemon2.id}}">
+                        <div class="img-circle-container slide">
+                            <img ng-src="img/{{battleCtrl.pokemon2.id}}.png" class="img-responsive" alt="Responsive image">
+                        </div>
+                        <div class="flex-container">
+                            <div class="flex-item type" ng-class="battleCtrl.pokemon2.type1|lowercase">{{battleCtrl.pokemon2.type1}}</div>
+                            <div class="flex-item type" ng-class="battleCtrl.pokemon2.type2|lowercase" ng-if="battleCtrl.pokemon2.type2 != ''">{{battleCtrl.pokemon2.type2}}</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!--Affichage du graphique obtenu grâce au deux pokemons-->
+        <div ng-show="battleCtrl.pokemon2.changed" class=" row kiviat" >
+            <canvas class="slide" id="canvas"></canvas>
+        </div>
+    </div>
+        </div>
+</div>

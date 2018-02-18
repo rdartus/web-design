@@ -1,0 +1,82 @@
+<div ng-controller="mainController as main">
+	<!--Navbar interne a chaque view car dépendant de la page-->
+	<div class="navbar navbar-inverse navbar-fixed-top" >
+		<div class="container-fluid" ng-controller="randomController as rdmCtrl">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+				<a class="navbar-brand" ng-href="#/liste">Pokédex</a>
+			</div>
+			<div class="navbar-collapse collapse navbar-responsive-collapse">
+				<ul class="nav navbar-nav" ng-init="getRandom(151)">
+					<li><a  ng-click="goto('/fiche/'+rdmCtrl.rand)">Aléatoire</a></li>
+					<li><a  ng-click="goto('/combat/')">Comparateur</a></li>
+					<li><a  ng-click="goto('/about/')">A propos</a></li>
+				</ul>
+				<!--Barre de recherche dans les noms, descriptions et types
+				recherche de mot exact-->
+				<ul class="nav navbar-nav navbar-right">
+					<li><form class="navbar-form navbar-left">
+						<div class="form-group">
+							<input ng-model="main.recherche" type="text" class="form-control col-md-8" placeholder="Pikachu, Bulbizarre, Description..." >
+						</div>
+					</form></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid main" >
+		<!--Utilisation du Infinite Scroll pour limiter les chargements d'image
+		distance mise à 0.5 pour mettre en exergue la fonctionalité,
+		sa valeur en production serait de 2 pour qu'on ne touche jamais le bas de la page-->
+		<div class="container cadre" infinite-scroll="loadMore()" infinite-scroll-distance='0.5'>
+			<div>
+				<!--Paramètre de filtre et recherche avancés-->
+				<div class="row container-fluid recherche-avance">
+					<div class ="row container-fluid">
+						<button id="hideBtn" ng-click="main.isClicked()" ng-hide="main.click">Paramètres avancés</button>
+					</div>
+					<div class="row container-fluid" ng-show="main.click">
+						<div class="row">
+							<img ng-click="main.isClicked()" class="btn-close" src="img/icon/close.png"/>
+						</div>
+						<!--Ajout de ng-class pour lier l'ordre à la flèche allant vers le haut ou le bas
+						Utilisation de ng-click-->
+						 <div class="row container col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-3 param-recherche"><span class="tri"> Trier par :   </span>
+							 <a class="btn btn-default param-button" ng-click="main.setParams('id')">Numéro</a>
+							<span ng-show="main.Params === 'id'" ng-class="main.reverse==false? 'glyphicon glyphicon-arrow-up':'glyphicon glyphicon-arrow-down'"></span>
+							 <a class="btn btn-default param-button" ng-click="main.setParams('taille')">Taille</a>
+							 <span ng-show="main.Params === 'taille'" ng-class="main.reverse==false? 'glyphicon glyphicon-arrow-up':'glyphicon glyphicon-arrow-down'"></span>
+							 <a class="btn btn-default param-button" ng-click="main.setParams('poids')">Poids</a>
+							 <span ng-show="main.Params === 'poids'" ng-class="main.reverse==false? 'glyphicon glyphicon-arrow-up':'glyphicon glyphicon-arrow-down'"></span>
+							 <a class="btn btn-default param-button" ng-click="main.setParams('nom')">Alphabétique</a>
+							 <span ng-show="main.Params === 'nom'" ng-class="main.reverse==false? 'glyphicon glyphicon-arrow-up':'glyphicon glyphicon-arrow-down'"></span>
+						 </div>
+					</div>
+				</div>
+				<!--Affichage des Pokemon-->
+				<div class ="row container-fluid">
+					<a ng-click="goto('/fiche/'+pokemon.id)" class="pokeliste container col-md-3 col-sm-4 col-xs-8 col-sm-offset-0 col-xs-offset-2 slide"
+					   ng-repeat="pokemon in main.miniPoked | filtrePerso:main.recherche:main.pokedex:main.Params:main.reverse" >
+						<!--Utilisation du filtre custom pour récupérer les pokemons voulus dans l'ordre voulu-->
+						<div class="separator"></div>
+						<div class="img-circle-container hvr-bob hvr-float-shadow">
+							<!--image du pokemon de nos archive visible à
+							http://assets.pokemon.com/assets/cms2/img/pokedex/full/{{pokemon.id}}.png
+							utiliser le lien pour un plus grand temps de chargement
+							-->
+							<img ng-src="img/{{pokemon.id}}.png" class="img-responsive">
+						</div>
+						<!--Nom et numéro du pokemon-->
+						<h4>{{pokemon.nom}} #{{pokemon.id}}</h4>
+						<!--Types-->
+						<div class="flex-container">
+							<div class="flex-item type" ng-class="pokemon.type1|lowercase">{{pokemon.type1}}</div>
+							<div class="flex-item type" ng-class="pokemon.type2|lowercase" ng-if="pokemon.type2 != ''">{{pokemon.type2}}</div>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

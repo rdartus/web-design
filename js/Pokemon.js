@@ -1,84 +1,140 @@
- (function () {
+function getIdByUrl (){
+     /*fonction de récupération de l'id du pokemon par le biais de l'URL
+       pour le cas de l'aléatoire on redirige directement vers un numero
+       fichier trié*/
 
-    var $button = $("<div id='source-button' class='btn btn-primary btn-xs'>&lt; &gt;</div>").click(function () {
-      var index = $('.bs-component').index($(this).parent());
-      $.get(window.location.href, function (data) {
-        var html = $(data).find('.bs-component').eq(index).html();
-        html = cleanSource(html);
-        $("#source-modal pre").text(html);
-        $("#source-modal").modal();
-      })
+     var url = window.location.href;
+     var tab = url.split("/");
+     //on récupère le dernier élément de l'URL
+	 msg = tab[tab.length-1];
+     return msg;
 
-    });
+ }
 
-    $('.bs-component [data-toggle="popover"]').popover();
-    $('.bs-component [data-toggle="tooltip"]').tooltip();
+ function getPokemonById (id, poked){
+    /*on récupère l'objet Pokemon contenant toutes ses informations
+      on considère le fichier trié*/
+    var i = parseInt(id);
+    var val;
 
-    $(".bs-component").hover(function () {
-      $(this).append($button);
-      $button.show();
-    }, function () {
-      $button.hide();
-    });
-
-    function cleanSource(html) {
-      var lines = html.split(/\n/);
-
-      lines.shift();
-      lines.splice(-1, 1);
-
-      var indentSize = lines[0].length - lines[0].trim().length,
-          re = new RegExp(" {" + indentSize + "}");
-
-      lines = lines.map(function (line) {
-        if (line.match(re)) {
-          line = line.substring(indentSize);
-        }
-
-        return line;
-      });
-
-      lines = lines.join("\n");
-
-      return lines;
+    try{
+        val = poked[i-1];
     }
+    catch (e){
+        
+    }
+    return  val;
 
-    $(".icons-material .icon").each(function () {
-      $(this).after("<br><br><code>" + $(this).attr("class").replace("icon ", "") + "</code>");
-    });
+ }
 
-  })();
-  
-$(document).ready(function(){
-  // Add smooth scrolling to all links in navbar + footer link
-  /*
-  $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
+ function getReviewsById(id,comments) {
+     //fichier trié par ordre chronologique
+     return comments[parseInt(id) - 1].comments;
+ }
 
-    // Prevent default anchor click behavior
-    event.preventDefault();
+ function getNextPokemon (id){
+     /*permet de naviguer dans le pokedex sans repasser par la liste
+       permet d'afficher directement le prochain pokemon*/
+     var num = parseInt(id);
 
-    // Store hash
-    var hash = this.hash;
+     //comme on le fait avec les ID il faut faire des string avec 3 decimales ex: 001 ou 020
+     if(num < 9){
+         return "00"+ (num+1);
+     }
+     else if (num >= 9 && num < 99){
+         return "0"+(num+1);
+     }
+     else{
+         return (num+1);
+     }
+ }
 
-    // Using jQuery's animate() method to add smooth page scroll
-    // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
-    $('html, body').animate({
-      scrollTop: $(hash).offset().top
-    }, 900, function(){
-   
-      // Add hash (#) to URL when done scrolling (default click behavior)
-      window.location.hash = hash;
-    });
-  });
-  */
-  $(window).scroll(function() {
-    $(".slideanim").each(function(){
-      var pos = $(this).offset().top;
+ function getPreviousPokemon (id){
+     //permet de naviguer dans le pokedex sans repasser par la liste
+     //cela permet de recupérer le pokemeon précedent pour pouvoir l'afficher
+     var num = parseInt(id);
 
-      var winTop = $(window).scrollTop();
-        if (pos < winTop + 750) {
-          $(this).addClass("slide");
-        }
-    });
-  });
-})
+     if(num < 11){
+         return "00"+ (num-1);
+     }
+     else if (num >= 11 && num < 101){
+         return "0"+(num-1);
+     }
+     else{
+         return (num-1);
+     }
+ }
+
+ function getClassNext (id){
+     /*permet de naviguer dans le pokedex sans repasser par la liste
+       cette classe permet de définir si l'utilisateur peut naviguer vers le pokemon suivant*/
+     if(id=="151")
+        return "next disabled";
+     else
+        return "next";
+ }
+
+ function getClassPrevious (id){
+     /*permet de naviguer dans le pokedex sans repasser par la liste
+       cette classe permet de definir si l'utilisateur peut naviguer vers le pokemon précedent*/
+     if(id=="001")
+         return "previous disabled";
+     else
+         return "previous";
+ }
+ 
+ function getListPokemon(ids,pokedex){
+     /*on récupère la liste des pokemon liés à celui dont on fourni l'ID
+       il s'agit de ses évolutions*/
+     var listPokemon =[];
+     for(var i= 0;i<ids.length;i++)
+     {
+		listPokemon.push(getPokemonById(ids[i],pokedex));
+     }
+     return listPokemon;
+ }
+
+	function getZones(zones){
+        //permet d'afficher les zones de rencontre de ce pokemon
+		var result = "";
+		if(zones[0] == 0)
+		{
+            //si on ne connait pas sa zone on affiche un message
+			return "Ce Pokémon n'a pas de zone prédéfinie, alors bon courage pour le trouver...";
+		}
+		else if(zones.length == 1){
+            //si l'objet pokemon a un array de zone recuperer celui ci
+			return "Zone " + zones[0];
+		}
+		else{
+			result+="Zones ";
+			for (var i=0;i<zones.length;i++)
+			{
+				result+= zones[i] + ", ";
+			}
+			return result.substring(0,result.length-2);
+		}
+	};
+
+/*function watching scrolling
+  permet d'activer le slide lorsqu'on est suffisament proche de l'objet*/
+ $(document).ready(function () {
+     $(window).scroll(function () {
+         $(".slideanim").each(function () {
+             var window_height = $(window).height();
+             var window_top_position = $(window).scrollTop();
+             var window_bottom_position = (window_top_position + window_height);
+             var $element = $(this);
+             var element_height = $element.outerHeight();
+             var element_top_position = $element.offset().top;
+             var element_bottom_position = (element_top_position + element_height);
+             if ((element_bottom_position >= window_top_position) &&
+                 (element_top_position <= window_bottom_position)) {
+                 $element.addClass("slide");
+             }
+         });
+     });
+ });
+
+
+

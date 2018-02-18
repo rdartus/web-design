@@ -1,0 +1,162 @@
+<div ng-controller=" pokemonController as pokemonCtrl">
+<div>
+    <div >
+        <!--La navbar à l'intérieur du ng-view est personalisée pour chaque vue-->
+        <div class="navbar navbar-inverse navbar-fixed-top" >
+            <div class="container-fluid" ng-controller="randomController as rdmCtrl">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+                    <a class="navbar-brand" ng-href="#/liste">Pokédex</a>
+                </div>
+                <div class="navbar-collapse collapse navbar-responsive-collapse">
+                    <!--Initialisation de la variable de lien aléatoire
+                    De cette façon pas de problème de changement continu de lien et pas d'erreur a chaque digest-->
+                    <ul class="nav navbar-nav" ng-init="getRandom(151)">
+                        <!--Différents lien d'accès-->
+                        <li><a ng-click="goto('/fiche/'+rdmCtrl.rand)">Aléatoire</a></li>
+                        <li><a  ng-click="goto('/combat')">Comparateur</a></li>
+                        <li><a  ng-click="goto('/about')">A propos</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <!--Différents lien d'accès aux ancrages-->
+                        <li><a du-scrollspy du-smooth-scroll ="Pokemon">Description</a></li>
+                        <li><a du-scrollspy du-smooth-scroll ="Avis">Avis</a></li>
+                        <li><a du-scrollspy du-smooth-scroll ="Statistiques" class="visible-xs">Statistiques</a></li>
+                        <li><a du-scrollspy du-smooth-scroll ="Carte">Carte</a></li>
+                        <li><a du-scrollspy du-smooth-scroll ="Evolutions">Evolutions</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--Fin navbar-->
+
+        <!--Conteneur de Pokemon-->
+        <div class="container-fluid main" id="Top">
+            <div class="container cadre" >
+                <div id = "Pokemon">
+                    <ul class="pager">
+                        <!--Bouton d'accès rapide aux pokemons suivants, précédents et nom du pokemon courant-->
+                        <li class="{{pokemonCtrl.classPrevious}}"><a href="pokedex.html#/fiche/{{pokemonCtrl.previous}}">&lsaquo;</a></li>
+                        <li class="title-container"><h1>{{pokemonCtrl.pokemon.nom}} #{{pokemonCtrl.pokemon.id}}</h1></li>
+                        <li class="{{pokemonCtrl.classNext}}"><a href="pokedex.html#/fiche/{{pokemonCtrl.next}}">&rsaquo;</a></li>
+                    </ul>
+                    <!--Image, description du pokemon, taille, poids et types-->
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <img ng-src="img/{{pokemonCtrl.pokemon.id}}.png" class="img-responsive main-img" alt="Responsive image">
+                            <div class="flex-container">
+                                <div class="flex-item type" ng-class="pokemonCtrl.pokemon.type1|lowercase">{{pokemonCtrl.pokemon.type1}}</div>
+                                <div class="flex-item type" ng-class="pokemonCtrl.pokemon.type2|lowercase" ng-if="pokemonCtrl.pokemon.type2 != ''" >{{pokemonCtrl.pokemon.type2}}</div>
+                            </div>
+                        </div>
+
+                        <div class="container col-sm-6">
+                            <div class="description-pokemon">
+                                <h2>Description</h2>
+                                <p id="description">
+                                    {{pokemonCtrl.pokemon.description}}
+                                </p>
+                            </div>
+                            <div class="informations-pokemon flex-container  slideanim">
+                                <div class="flex-container">
+                                    <div class="flex-item enonce">Taille</div>
+                                    <div class="flex-item donnee">{{pokemonCtrl.pokemon.taille}}m</div>
+                                </div>
+                                <!--Separator pour que les deux items soient écartés d'un certain espacement-->
+                                <div class="separator-taille-poids"></div>
+
+                                <div class="flex-container">
+                                    <div class="flex-item enonce">Poids</div>
+                                    <div class="flex-item donnee">{{pokemonCtrl.pokemon.poids}}kg</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Ligne contenant les avis des experts tirés du pokAPI.json-->
+                <div id="Avis" class="row">
+                    <div class="container col-sm-6 avis">
+                        <h2>Avis de l'expert</h2>
+                        <blockquote ng-if="pokemonCtrl.pokemon.avis != null">
+                            <p>{{pokemonCtrl.pokemon.avis.citation}}</p>
+                            <footer>{{pokemonCtrl.pokemon.avis.auteur}}<cite title="Source Title">{{pokemonCtrl.pokemon.avis.ouvrage}}</cite></footer>
+                        </blockquote>
+                        <p ng-if="pokemonCtrl.pokemon.avis == null">
+                            Nous avons pas trouvé d'expert compétent ayant un avis sur {{pokemonCtrl.pokemon.nom}}, Nous mettrons un avis dès qu'un expert de confiance  fera paraitre un ouvrage concernant {{pokemonCtrl.pokemon.nom}}
+                        </p>
+                    </div>
+                    <!--Ajout des statistiques du pokemon en graphique grâce a chart.js-->
+                    <div id="Statistiques" class="col-sm-6 kiviat" >
+                        <canvas class="slideanim" id="canvas"></canvas>
+                    </div>
+                </div>
+                <!--Ligne contenant les localisations possibles du pokemon sur la carte-->
+                <div id="Carte">
+                    <div class="row">
+                        <h2>Localisation</h2>
+                    </div>
+                    <div class="row map-container">
+                        <img ng-src="data/zones/map.jpg" class="img-responsive map"/>
+                        <img class="img-responsive zone" ng-repeat="route in pokemonCtrl.pokemon.zone" ng-src="data/zones/Zone_{{route}}.png"/>
+                    </div>
+                    <div class="row">
+                        <div class="legende">{{pokemonCtrl.zones}}</div>
+                    </div>
+                </div>
+                <!--Ligne contenant les différentes évolutions du pokemon-->
+                <div id="Evolutions" class="row evol-container ">
+                    <h2>Évolutions</h2>
+                    <!--ng-repeat pour répéter la mise en page du conteneur de pokemon -->
+                    <a ng-click="goto('/fiche/'+evol.id)" class="container col-sm-4 col-xs-5 col-sm-offset-0 col-xs-offset-1 "
+                       ng-if="!pokemonCtrl.gotEvolution(pokemonCtrl.pokemon)" ng-repeat="evol in pokemonCtrl.listPokemon">
+                        <div class="img-circle-container hvr-bob hvr-float-shadow" ng-class="pokemonCtrl.isPokemonSelected(evol)">
+                            <img ng-src="img/{{evol.id}}.png" class="img-responsive" alt="Responsive image">
+                        </div>
+                        <h4>{{evol.nom}} #{{evol.id}}</h4>
+
+                        <div class="flex-container">
+                            <!--Utilisation de ng-class pour définir les types du pokemon et donc la couleur de l'item-->
+                            <div class="flex-item type" ng-class="evol.type1|lowercase">{{evol.type1}}</div>
+                            <div class="flex-item type" ng-class="evol.type2|lowercase" ng-if="evol.type2 != ''">{{evol.type2}}</div>
+                        </div>
+                    </a>
+                    <!--S'il n'as pas d'évolution, mettre un message pour l'indiquer-->
+                    <p ng-if="pokemonCtrl.gotEvolution(pokemonCtrl.pokemon)">Ce pokemon est unique, ainsi il ne dispose pas d'evolution.<br>
+                        Cherissez le et ne le faites pas mourir au combat c'est peut etre le seul de sa race dans cette belle contrée de Kanto</p>
+                </div>
+                    <!--Partie gérant les commentaires-->
+                    <div  class="row container commentZone" ng-controller="ReviewController as reviewCtrl">
+                        <div class="row">
+							<div class= "col-xs-8 col-xs-offset-2">
+                                <!--Bouton permettant d'afficher les commentaires-->
+								<button id="hideBtn" ng-click="reviewCtrl.isClicked()">Commentaires</button>
+							</div>
+                        </div>
+                        <div class="row" ng-hide="reviewCtrl.click">
+                            <!--Bulletin à remplir pour poster un commentaire-->
+                            <form class= "col-xs-10 col-xs-offset-1" name="reviewForm" ng-submit="reviewCtrl.addReview(store.product)">
+                                <b>Adresse mail du dresseur</b>
+                                <input type="email" class="form-control saisie-mail" ng-model="reviewCtrl.review.author" required/>
+                                <b>Commentaire</b>
+                                <textarea class="form-control saisie-comment" rows="3" ng-model= "reviewCtrl.review.body" required></textarea>
+                                <button class="form-control btn btn-default saisie-valider" ng-show="reviewForm.$valid">Valider</button>
+                                <!--Le formulaire ne permet pas de sauvegarder les commentaires-->
+
+                            </form>
+                        </div>
+                        <!--Fonction affichant les commentaires du JSON-->
+                        <div class="row comment" ng-show="!reviewCtrl.click" ng-repeat="review in reviewCtrl.reviews">
+                            <div ng-class-even="'col-xs-8 col-xs-offset-4'" ng-class-odd="'col-xs-8'">
+                                <blockquote ng-class-even="'blockquote-reverse'">
+                                    <p>{{review.body}}</p>
+                                    <footer>{{review.author}}<cite title="Source Title">{{review.date | date}}</cite></footer>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

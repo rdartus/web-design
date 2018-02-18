@@ -1130,7 +1130,7 @@ img {
   height: auto;
 }
 .img-rounded {
-  border-radius: 3px;
+  border-radius: 15px;
 }
 .img-thumbnail {
   padding: 4px;
